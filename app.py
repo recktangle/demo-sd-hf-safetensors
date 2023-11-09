@@ -47,15 +47,14 @@ def handler(context: dict, request: Request) -> Response:
 
     buffered = BytesIO()
     image.save(buffered, format="JPEG", quality=80)
-    # img_str = base64.b64encode(buffered.getvalue())
+    img_str = base64.b64encode(buffered.getvalue())
 
     # You could also consider writing this image to S3
     # and returning the S3 URL instead of the image data
     # for a slightly faster response time
 
     return Response(
-        content_type="image/jpeg",
-        body=buffered.getvalue(),
+        json = {"output": str(img_str, "utf-8")}, 
         status=200
     )
 
